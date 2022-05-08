@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20220507-01" author="kssadomtsev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="role"/>
+            </not>
+        </preConditions>
+        <comment>Create role table</comment>
+        <sql>
+            CREATE TABLE role (
+                                          id SERIAL PRIMARY KEY,
+                                          name VARCHAR(255) NOT NULL
+            );
+
+            COMMENT ON TABLE role IS 'User roles';
+
+            COMMENT ON COLUMN role.id IS 'Unique identifier';
+            COMMENT ON COLUMN role.name IS 'Name';
+        </sql>
+    </changeSet>
+
+    <changeSet id="20220507-02" author="kssadomtsev">
+        <preConditions onFail="MARK_RAN">
+            <tableIsEmpty tableName="role"/>
+        </preConditions>
+        <comment>Fill role table</comment>
+        <sql>
+            INSERT INTO role(name)
+            VALUES ('ADMIN'),
+                   ('DEVELOPER'),
+                   ('QA'),
+                   ('USER')
+        </sql>
+    </changeSet>
+
+    <changeSet id="20220507-03" author="kssadomtsev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="company"/>
+            </not>
+        </preConditions>
+        <comment>Create company table</comment>
+        <sql>
+            CREATE TABLE company (
+                                  id SERIAL PRIMARY KEY,
+                                  name VARCHAR(255) NOT NULL,
+                                  address VARCHAR(2000)
+            );
+
+            COMMENT ON TABLE company IS 'Company';
+
+            COMMENT ON COLUMN company.id IS 'Unique identifier';
+            COMMENT ON COLUMN company.name IS 'Name';
+            COMMENT ON COLUMN company.address IS 'Address';
+        </sql>
+    </changeSet>
+
+    <changeSet id="20220507-04" author="kssadomtsev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="user"/>
+            </not>
+        </preConditions>
+        <comment>Create user table</comment>
+        <sql>
+            CREATE TABLE users (
+                                     id SERIAL PRIMARY KEY,
+                                     first_name VARCHAR(255) NOT NULL,
+                                     last_name VARCHAR(255),
+                                     email VARCHAR(255) NOT NULL,
+                                     password VARCHAR(255) NOT NULL,
+                                     company_id INT REFERENCES company(id) NOT NULL
+            );
+
+            COMMENT ON TABLE users IS 'User';
+
+            COMMENT ON COLUMN users.id IS 'Unique identifier';
+            COMMENT ON COLUMN users.first_name IS 'First name';
+            COMMENT ON COLUMN users.last_name IS 'Last name';
+            COMMENT ON COLUMN users.email IS 'Email';
+            COMMENT ON COLUMN users.password IS 'Encrypted password';
+            COMMENT ON COLUMN users.company_id IS 'Foreign key to Company table';
+        </sql>
+    </changeSet>
+
+    <changeSet id="20220508-01" author="kssadomtsev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="user_role"/>
+            </not>
+        </preConditions>
+        <comment>Create user roles table</comment>
+        <sql>
+            CREATE TABLE user_role (
+                                    user_id INT REFERENCES users(id) NOT NULL,
+                                    role_id INT REFERENCES role(id) NOT NULL
+            );
+            ALTER TABLE user_role
+                ADD CONSTRAINT user_role_idx UNIQUE (user_id, role_id);
+
+            COMMENT ON TABLE user_role IS 'User roles';
+
+            COMMENT ON COLUMN user_role.user_id IS 'Foreign key to User table';
+            COMMENT ON COLUMN user_role.role_id IS 'Foreign key to Role table';
+        </sql>
+    </changeSet>
+
+    <changeSet id="20220508-02" author="kssadomtsev">
+        <preConditions onFail="MARK_RAN">
+            <tableIsEmpty tableName="company"/>
+        </preConditions>
+        <comment>Fill company table</comment>
+        <sql>
+            INSERT INTO company(name, address)
+            VALUES ('Company 1', 'Moscow'),
+                   ('Company 2', 'Berlin'),
+                   ('Company 2', null)
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>
