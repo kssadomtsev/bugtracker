@@ -1,5 +1,6 @@
 package com.example.bugtracker.dto.user;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
+@Builder
 public class UserCreateDto {
     @Email(message = "Incorrect email format")
     @NotEmpty(message = "Field email is mandatory")

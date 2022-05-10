@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
         return repository.save(user);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public Page<UserDto> getUserListSortedAndPageable(Pageable pageable, UserCriteria criteria) {
         return userFilterService.getUserListSortedAndPageable(pageable, criteria);

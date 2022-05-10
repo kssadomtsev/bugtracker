@@ -1,6 +1,7 @@
 package com.example.bugtracker.dto.ticket;
 
 import com.example.bugtracker.enums.SeverityTicket;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
+@Builder
 public class TicketCreateDto {
     @NotNull(message = "Field severity is mandatory")
     private SeverityTicket severity;

@@ -117,7 +117,7 @@ public class TicketProcessorService {
         comment.setTicket(ticket);
         commentService.save(comment);
 
-        ticket.setStatus(StatusTicket.ASSIGNED);
+        ticket.setStatus(StatusTicket.REOPEN);
 
         return mappingService.map(ticketService.save(ticket), TicketDto.class);
     }
