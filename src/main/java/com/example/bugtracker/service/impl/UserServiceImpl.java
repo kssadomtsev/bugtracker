@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService {
     private static final String USER_NOT_FOUND_BY_EMAIL = "User not found by email %s";
     private static final String USER_NOT_FOUND_BY_ID = "User not found by id %d";
 
-
     private final UserRepository repository;
     private final UserFilterService userFilterService;
     private final MappingService mappingService;
@@ -51,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public UserDto findById(Long id) {
+    public UserDto getDtoById(Long id) {
         return mappingService.map(repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format(USER_NOT_FOUND_BY_ID, id))), UserDto.class);
     }

@@ -1,6 +1,10 @@
 package com.example.bugtracker.mapping;
 
+import com.example.bugtracker.dto.ticket.CommentDto;
+import com.example.bugtracker.dto.ticket.TicketDto;
 import com.example.bugtracker.dto.user.UserCreateDto;
+import com.example.bugtracker.model.Comment;
+import com.example.bugtracker.model.Ticket;
 import com.example.bugtracker.model.User;
 import lombok.AllArgsConstructor;
 import org.modelmapper.Converter;
@@ -22,6 +26,7 @@ public class MappingService {
     @PostConstruct
     public void initConfig() {
         userMap();
+        ticketMap();
     }
 
     private void userMap() {
@@ -34,6 +39,27 @@ public class MappingService {
                 skip(destination.getRoles());
             }
         });
+    }
+
+    private void ticketMap() {
+        modelMapper.typeMap(Ticket.class, TicketDto.class)
+                .addMappings(mapper -> mapper
+                        .using((Converter<User, String>) mappingContext ->
+                                mappingContext.getSource() == null ? null :
+                                        mappingContext.getSource().getEmail())
+                        .map(Ticket::getReporter, TicketDto::setReporter));
+        modelMapper.typeMap(Ticket.class, TicketDto.class)
+                .addMappings(mapper -> mapper
+                        .using((Converter<User, String>) mappingContext ->
+                                mappingContext.getSource() == null ? null :
+                                        mappingContext.getSource().getEmail())
+                        .map(Ticket::getResponsible, TicketDto::setResponsible));
+        modelMapper.typeMap(Comment.class, CommentDto.class)
+                .addMappings(mapper -> mapper
+                        .using((Converter<User, String>) mappingContext ->
+                                mappingContext.getSource() == null ? null :
+                                        mappingContext.getSource().getEmail())
+                        .map(Comment::getAuthor, CommentDto::setAuthor));
     }
 
     public <S, D> void addConverter(Converter<S, D> converter) {

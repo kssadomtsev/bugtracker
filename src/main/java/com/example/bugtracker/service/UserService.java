@@ -14,5 +14,5 @@ public interface UserService {
     boolean existsByEmail(String email);
     User save(User user);
     Page<UserDto> getUserListSortedAndPageable(Pageable pageable, UserCriteria criteria);
-    UserDto findById(Long id);
+    UserDto getDtoById(Long id);
 }
