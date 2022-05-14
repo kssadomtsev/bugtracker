@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.time.LocalDateTime;
 
 import static java.util.stream.Collectors.toList;
 
+@ApiIgnore
 @RestController
 @ControllerAdvice
 @Slf4j

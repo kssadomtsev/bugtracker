@@ -12,6 +12,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
+/**
+ * JWT token util class
+ */
+
 @Component
 @Slf4j
 public class JwtTokenUtil {
@@ -20,7 +24,12 @@ public class JwtTokenUtil {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-
+    /**
+     * Generate new JWT token
+     *
+     * @param authentication authentication object
+     * @return JWT token
+     */
     public String generateJwtToken(Authentication authentication) {
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
         return Jwts.builder()
@@ -31,10 +40,22 @@ public class JwtTokenUtil {
                 .compact();
     }
 
+    /**
+     * Extract username from JWT token
+     *
+     * @param token JWT token
+     * @return username
+     */
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
+    /**
+     * Token validation
+     *
+     * @param authToken JWT token
+     * @return boolean representation of validity
+     */
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

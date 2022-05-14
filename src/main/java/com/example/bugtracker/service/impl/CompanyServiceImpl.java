@@ -7,6 +7,10 @@ import com.example.bugtracker.service.CompanyService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * CompanyService interface implementation
+ */
+
 @Service
 @AllArgsConstructor
 public class CompanyServiceImpl implements CompanyService {

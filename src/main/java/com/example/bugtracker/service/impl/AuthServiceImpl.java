@@ -25,6 +25,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * AuthService interface implementation
+ */
+
 @Service
 @AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -58,6 +62,12 @@ public class AuthServiceImpl implements AuthService {
         return jwtTokenUtil.generateJwtToken(authentication);
     }
 
+    /**
+     * Get list or role from given list of their ids
+     *
+     * @param roleIds list of role's id
+     * @return list or role object
+     */
     private Set<Role> getRoles(List<Long> roleIds) {
         return roleIds.stream().map(roleService::findById)
                 .collect(Collectors.toSet());

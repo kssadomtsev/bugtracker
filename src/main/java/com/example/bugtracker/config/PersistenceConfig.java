@@ -14,9 +14,4 @@ public class PersistenceConfig {
     public AuditorAware<User> auditorProvider() {
         return new SpringSecurityUserAware();
     }
-
-//    @Bean
-//    public AuditorAware<String> auditorUserStringProvider() {
-//        return new SpringSecurityUserStringAuditorAware();
-//    }
 }

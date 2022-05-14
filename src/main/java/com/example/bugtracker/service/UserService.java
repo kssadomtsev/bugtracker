@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
-@Service
 public interface UserService {
     User findByEmail(String email);
     boolean existsByEmail(String email);

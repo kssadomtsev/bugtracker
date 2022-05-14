@@ -17,16 +17,33 @@ import tech.jhipster.service.QueryService;
 
 import java.util.Objects;
 
+/**
+ * QueryService interface implementation for User entity
+ */
+
 @Service
 @RequiredArgsConstructor
 public class UserFilterService extends QueryService<User> {
     private final MappingService mapping;
     private final UserRepository repository;
 
+    /**
+     * Get pageable list of users
+     *
+     * @param pageable page object
+     * @param criteria filtered criteria
+     * @return pageable list of users DTO
+     */
     public Page<UserDto> getUserListSortedAndPageable(Pageable pageable, UserCriteria criteria) {
         return mapping.mapPages(repository.findAll(createSpecification(criteria), pageable), UserDto.class);
     }
 
+    /**
+     * Build a specification
+     *
+     * @param criteria filtered criteria
+     * @return specification
+     */
     private Specification<User> createSpecification(UserCriteria criteria) {
         Specification<User> specification = Specification.where(null);
         if (Objects.nonNull(criteria)) {

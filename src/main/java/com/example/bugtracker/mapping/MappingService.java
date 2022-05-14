@@ -18,17 +18,28 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service for mapping one class to other
+ * with creating new object(s) and collection for boxing
+ */
+
 @AllArgsConstructor
 @Service
 public class MappingService {
     private final ModelMapper modelMapper;
 
+    /**
+     * Init mapping rules
+     */
     @PostConstruct
     public void initConfig() {
         userMap();
         ticketMap();
     }
 
+    /**
+     * Mapping rules for user entity and its DTO
+     */
     private void userMap() {
         modelMapper.addMappings(new PropertyMap<UserCreateDto, User>() {
             @Override
@@ -41,6 +52,9 @@ public class MappingService {
         });
     }
 
+    /**
+     * Mapping rules for ticket entity and its DTO
+     */
     private void ticketMap() {
         modelMapper.typeMap(Ticket.class, TicketDto.class)
                 .addMappings(mapper -> mapper
@@ -62,24 +76,50 @@ public class MappingService {
                         .map(Comment::getAuthor, CommentDto::setAuthor));
     }
 
-    public <S, D> void addConverter(Converter<S, D> converter) {
-        modelMapper.addConverter(converter);
-    }
-
+    /**
+     * Map source object into destination class with
+     * creating new object
+     *
+     * @param source source object
+     * @param clazz destination class
+     * @return new object of destination class
+     */
     public <S, D> D map(S source, Class<D> clazz) {
         return modelMapper.map(source, clazz);
     }
 
+    /**
+     * Map source object into destination object
+     *
+     * @param source source object
+     * @param dest destination object
+     */
     public <S, D> void map(S source, D dest) {
         modelMapper.map(source, dest);
     }
 
+    /**
+     * Map list of source objects into destination class with
+     * creating new objects and collection
+     *
+     * @param sources list of source objects
+     * @param clazz destination class
+     * @return new list of objects of destination class
+     */
     public <S, D> List<D> mapList(List<S> sources, Class<D> clazz) {
         return sources.stream()
                 .map(s -> map(s, clazz))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Map page of source objects into destination class with
+     * creating new objects and boxed page
+     *
+     * @param page page of source objects
+     * @param clazz destination class
+     * @return new page of object of destination class
+     */
     public <S, D> Page<D> mapPages(Page<S> page, Class<D> clazz) {
         return new PageImpl<>(mapList(page.getContent(), clazz), page.getPageable(), page.getTotalElements());
     }

@@ -65,12 +65,6 @@ public abstract class AbstractMvcInit extends AbstractDBInit {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules();
-
-//        JavaTimeModule javaTimeModule=new JavaTimeModule();
-//        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ISO_DATE_TIME));
-//        objectMapper.registerModule(javaTimeModule);
-//        objectMapper.registerModule(new JavaTimeModule()
-//                .addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ISO_DATE_TIME)));
         return objectMapper.readValue(json, clazz);
     }
 

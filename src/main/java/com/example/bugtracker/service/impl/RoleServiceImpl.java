@@ -7,6 +7,10 @@ import com.example.bugtracker.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * RoleService interface implementation
+ */
+
 @Service
 @AllArgsConstructor
 public class RoleServiceImpl implements RoleService {

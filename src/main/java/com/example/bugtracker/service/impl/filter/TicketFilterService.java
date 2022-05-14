@@ -14,16 +14,33 @@ import tech.jhipster.service.QueryService;
 
 import java.util.Objects;
 
+/**
+ * QueryService interface implementation for Ticket entity
+ */
+
 @Service
 @RequiredArgsConstructor
 public class TicketFilterService extends QueryService<Ticket> {
     private final MappingService mapping;
     private final TicketRepository repository;
 
+    /**
+     * Get pageable list of tickets
+     *
+     * @param pageable page object
+     * @param criteria filtered criteria
+     * @return pageable list of ticket DTOs
+     */
     public Page<TicketDto> getTicketListSortedAndPageable(Pageable pageable, TicketCriteria criteria) {
         return mapping.mapPages(repository.findAll(createSpecification(criteria), pageable), TicketDto.class);
     }
 
+    /**
+     * Build a specification
+     *
+     * @param criteria filtered criteria
+     * @return specification
+     */
     private Specification<Ticket> createSpecification(TicketCriteria criteria) {
         Specification<Ticket> specification = Specification.where(null);
         if (Objects.nonNull(criteria)) {

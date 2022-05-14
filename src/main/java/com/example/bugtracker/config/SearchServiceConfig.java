@@ -16,6 +16,5 @@ public class SearchServiceConfig {
     public Map<SearchDataType, SearchService<?>> createSearchServiceMap(List<SearchService<?>> serviceList) {
         return serviceList.stream()
                 .collect(Collectors.toMap(SearchService::getDataType, Function.identity()));
-
     }
 }

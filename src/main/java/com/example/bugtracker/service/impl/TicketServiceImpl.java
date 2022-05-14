@@ -7,6 +7,10 @@ import com.example.bugtracker.service.TicketService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * TicketService interface implementation
+ */
+
 @Service
 @AllArgsConstructor
 public class TicketServiceImpl implements TicketService {

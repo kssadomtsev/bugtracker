@@ -6,6 +6,10 @@ import com.example.bugtracker.service.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * CommentService interface implementation
+ */
+
 @Service
 @AllArgsConstructor
 public class CommentServiceImpl implements CommentService {

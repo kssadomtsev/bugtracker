@@ -21,6 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+/**
+ * Service implements business application logic such as
+ * changing ticket states on the all stages by its workflow
+ */
+
 @Service
 @AllArgsConstructor
 public class TicketProcessorService {
@@ -36,7 +41,12 @@ public class TicketProcessorService {
     private static final Set<StatusTicket> TICKET_STATUSES_FOR_VERIFY = Set.of(StatusTicket.SOLVED);
     private static final Set<StatusTicket> TICKET_STATUSES_FOR_REOPEN = Set.of(StatusTicket.CLOSED);
 
-
+    /**
+     * Create new ticket
+     *
+     * @param ticketCreateDto ticket create DTO
+     * @return ticket created DTO
+     */
     @Transactional
     public TicketDto create(TicketCreateDto ticketCreateDto) {
         Ticket ticket = mappingService.map(ticketCreateDto, Ticket.class);
@@ -44,6 +54,13 @@ public class TicketProcessorService {
         return mappingService.map(ticketService.save(ticket), TicketDto.class);
     }
 
+    /**
+     * Create new ticket's comment
+     *
+     * @param id               ticket id
+     * @param commentCreateDto comment create DTO
+     * @return ticket DTO
+     */
     @Transactional
     public TicketDto addComment(Long id, CommentCreateDto commentCreateDto) {
         Comment comment = mappingService.map(commentCreateDto, Comment.class);
@@ -52,11 +69,23 @@ public class TicketProcessorService {
         return mappingService.map(ticketService.findById(id), TicketDto.class);
     }
 
+    /**
+     * Delete ticket
+     *
+     * @param id ticket id
+     */
     @Transactional
     public void delete(Long id) {
         ticketService.deleteById(id);
     }
 
+    /**
+     * Assign ticket to responsible user
+     *
+     * @param id              ticket id
+     * @param ticketAssignDto ticket Assign DTO
+     * @return ticket DTO
+     */
     @Transactional
     public TicketDto assign(Long id, TicketAssignDto ticketAssignDto) {
         Ticket ticket = ticketService.findById(id);
@@ -75,6 +104,13 @@ public class TicketProcessorService {
         return mappingService.map(ticketService.save(ticket), TicketDto.class);
     }
 
+    /**
+     * Solve ticket
+     *
+     * @param id               ticket id
+     * @param commentCreateDto comment
+     * @return ticket DTO
+     */
     @Transactional
     public TicketDto solve(Long id, CommentCreateDto commentCreateDto) {
         Ticket ticket = ticketService.findById(id);
@@ -89,6 +125,13 @@ public class TicketProcessorService {
         return mappingService.map(ticketService.save(ticket), TicketDto.class);
     }
 
+    /**
+     * Verify ticket
+     *
+     * @param id              ticket id
+     * @param ticketVerifyDto ticket verify DTO
+     * @return ticket DTO
+     */
     @Transactional
     public TicketDto verify(Long id, TicketVerifyDto ticketVerifyDto) {
         Ticket ticket = ticketService.findById(id);
@@ -108,6 +151,13 @@ public class TicketProcessorService {
         return mappingService.map(ticketService.save(ticket), TicketDto.class);
     }
 
+    /**
+     * Reopen ticket
+     *
+     * @param id               ticket id
+     * @param commentCreateDto comment
+     * @return ticket DTO
+     */
     @Transactional
     public TicketDto reopen(Long id, CommentCreateDto commentCreateDto) {
         Ticket ticket = ticketService.findById(id);
@@ -122,10 +172,23 @@ public class TicketProcessorService {
         return mappingService.map(ticketService.save(ticket), TicketDto.class);
     }
 
+    /**
+     * Get pageable list of tickets
+     *
+     * @param pageable page object
+     * @param criteria filtered criteria
+     * @return pageable list of ticket DTOs
+     */
     public Page<TicketDto> getTicketListSortedAndPageable(Pageable pageable, TicketCriteria criteria) {
         return filterService.getTicketListSortedAndPageable(pageable, criteria);
     }
 
+    /**
+     * Get ticket by id
+     *
+     * @param id ticket id
+     * @return ticket DTO
+     */
     public TicketDto getDtoById(Long id) {
         return mappingService.map(ticketService.findById(id), TicketDto.class);
     }

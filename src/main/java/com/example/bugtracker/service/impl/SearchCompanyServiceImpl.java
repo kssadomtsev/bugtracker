@@ -1,6 +1,5 @@
 package com.example.bugtracker.service.impl;
 
-import com.example.bugtracker.dto.IdNameDTO;
 import com.example.bugtracker.dto.company.CompanyDto;
 import com.example.bugtracker.enums.SearchDataType;
 import com.example.bugtracker.model.Company;
@@ -15,6 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+/**
+ * SearchService interface implementation for Company entity
+ */
 
 @Service
 public class SearchCompanyServiceImpl extends SearchService<Company> {

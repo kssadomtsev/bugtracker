@@ -11,7 +11,6 @@ import com.example.bugtracker.specification.criteria.UserCriteria;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +46,6 @@ public class UserServiceImpl implements UserService {
         return userFilterService.getUserListSortedAndPageable(pageable, criteria);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public UserDto getDtoById(Long id) {
         return mappingService.map(repository.findById(id)

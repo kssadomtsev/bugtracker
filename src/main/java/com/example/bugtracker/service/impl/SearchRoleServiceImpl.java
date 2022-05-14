@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * SearchService interface implementation for Role entity
+ */
+
 @Service
 public class SearchRoleServiceImpl extends SearchService<Role> {
 
