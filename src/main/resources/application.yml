@@ -1,5 +1,5 @@
 server:
-  port: ${BUGTRACKER_SERVICE_PORT:8010}
+  port: ${BUGTRACKER_SERVICE_PORT}
   servlet:
     context-path: /api
 
@@ -16,9 +16,9 @@ spring:
   liquibase:
     change-log: classpath:/db/master.xml
   datasource:
-    username: ${BUGTRACKER_DB_USERNAME:postgres}
-    password: ${BUGTRACKER_DB_PASSWORD:admin}
-    url: ${BUGTRACKER_DB_URL:jdbc:postgresql://127.0.0.1:5432/bugtrackerdb}
+    username: ${BUGTRACKER_DB_USERNAME}
+    password: ${BUGTRACKER_DB_PASSWORD}
+    url: ${BUGTRACKER_DB_URL}
   sql:
     init:
       mode: always

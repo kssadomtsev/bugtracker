@@ -84,7 +84,7 @@ class TicketControllerTest extends AbstractMvcInit {
                 .message("Ticket assignment")
                 .build();
 
-        mvc.perform(MockMvcRequestBuilders.post(ticketPath + "/1/assign")
+        mvc.perform(MockMvcRequestBuilders.patch(ticketPath + "/1/assign")
                         .header("Authorization", adminJWT)
                         .contentType(MediaType.APPLICATION_JSON_VALUE).content(mapToJson(ticketAssignDto)))
                 .andDo(print())
@@ -99,7 +99,7 @@ class TicketControllerTest extends AbstractMvcInit {
                 .message("Ticket assignment")
                 .build();
 
-        mvc.perform(MockMvcRequestBuilders.post(ticketPath + "/2/assign")
+        mvc.perform(MockMvcRequestBuilders.patch(ticketPath + "/2/assign")
                         .header("Authorization", adminJWT)
                         .contentType(MediaType.APPLICATION_JSON_VALUE).content(mapToJson(ticketAssignDto)))
                 .andDo(print())
@@ -114,7 +114,7 @@ class TicketControllerTest extends AbstractMvcInit {
                 .message("Ticket assignment")
                 .build();
 
-        mvc.perform(MockMvcRequestBuilders.post(ticketPath + "/1/assign")
+        mvc.perform(MockMvcRequestBuilders.patch(ticketPath + "/1/assign")
                         .header("Authorization", adminJWT)
                         .contentType(MediaType.APPLICATION_JSON_VALUE).content(mapToJson(ticketAssignDto)))
                 .andDo(print())
@@ -127,7 +127,7 @@ class TicketControllerTest extends AbstractMvcInit {
     void solveTicketCorrect() throws Exception {
         CommentCreateDto newComment = new CommentCreateDto("New comment");
 
-        mvc.perform(MockMvcRequestBuilders.post(ticketPath + "/2/solve")
+        mvc.perform(MockMvcRequestBuilders.patch(ticketPath + "/2/solve")
                         .header("Authorization", devJWT)
                         .contentType(MediaType.APPLICATION_JSON_VALUE).content(mapToJson(newComment)))
                 .andDo(print())
@@ -142,7 +142,7 @@ class TicketControllerTest extends AbstractMvcInit {
                 .message("Ticket verify false")
                 .build();
 
-        mvc.perform(MockMvcRequestBuilders.post(ticketPath + "/3/verify")
+        mvc.perform(MockMvcRequestBuilders.patch(ticketPath + "/3/verify")
                         .header("Authorization", qaJWT)
                         .contentType(MediaType.APPLICATION_JSON_VALUE).content(mapToJson(ticketVerifyDto)))
                 .andDo(print())
@@ -157,7 +157,7 @@ class TicketControllerTest extends AbstractMvcInit {
                 .message("Ticket verify true")
                 .build();
 
-        mvc.perform(MockMvcRequestBuilders.post(ticketPath + "/4/verify")
+        mvc.perform(MockMvcRequestBuilders.patch(ticketPath + "/4/verify")
                         .header("Authorization", qaJWT)
                         .contentType(MediaType.APPLICATION_JSON_VALUE).content(mapToJson(ticketVerifyDto)))
                 .andDo(print())
@@ -169,7 +169,7 @@ class TicketControllerTest extends AbstractMvcInit {
     void reopenTicketCorrect() throws Exception {
         CommentCreateDto newComment = new CommentCreateDto("Reopen ticket");
 
-        mvc.perform(MockMvcRequestBuilders.post(ticketPath + "/5/reopen")
+        mvc.perform(MockMvcRequestBuilders.patch(ticketPath + "/5/reopen")
                         .header("Authorization", userJWT)
                         .contentType(MediaType.APPLICATION_JSON_VALUE).content(mapToJson(newComment)))
                 .andDo(print())

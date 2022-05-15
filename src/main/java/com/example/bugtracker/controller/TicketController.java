@@ -54,28 +54,28 @@ public class TicketController {
     }
 
     @Operation(summary = "Assign ticket to responsible by id")
-    @PostMapping("/{id}/assign")
+    @PatchMapping("/{id}/assign")
     @PreAuthorize("hasAnyAuthority('ADMIN','DEVELOPER')")
     public TicketDto assign(@PathVariable Long id, @Valid @RequestBody TicketAssignDto ticketAssignDto) {
         return service.assign(id, ticketAssignDto);
     }
 
     @Operation(summary = "Solve ticket by id")
-    @PostMapping("/{id}/solve")
+    @PatchMapping("/{id}/solve")
     @PreAuthorize("hasAnyAuthority('ADMIN','DEVELOPER')")
     public TicketDto solve(@PathVariable Long id, @Valid @RequestBody CommentCreateDto commentCreateDto) {
         return service.solve(id, commentCreateDto);
     }
 
     @Operation(summary = "Verify ticket by id")
-    @PostMapping("/{id}/verify")
+    @PatchMapping("/{id}/verify")
     @PreAuthorize("hasAnyAuthority('ADMIN','QA')")
     public TicketDto verify(@PathVariable Long id, @Valid @RequestBody TicketVerifyDto ticketVerifyDto) {
         return service.verify(id, ticketVerifyDto);
     }
 
     @Operation(summary = "Reopen ticket by id")
-    @PostMapping("/{id}/reopen")
+    @PatchMapping("/{id}/reopen")
     public TicketDto reopen(@PathVariable Long id, @Valid @RequestBody CommentCreateDto commentCreateDto) {
         return service.reopen(id, commentCreateDto);
     }

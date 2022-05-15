@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  postgresdb:
+    image: postgres
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - POSTGRES_PASSWORD=${BUGTRACKER_DB_PASSWORD}
+      - POSTGRES_USER=${BUGTRACKER_DB_USERNAME}
+      - POSTGRES_DB=${BUGTRACKER_DB}
+    ports:
+      - ${POSTGRESQL_LOCAL_PORT}:${POSTGRESQL_DOCKER_PORT}
+  app:
+    depends_on:
+      - postgresdb
+    build: ./
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
+    environment:
+      - BUGTRACKER_SERVICE_PORT=${SPRING_LOCAL_PORT}
+      - BUGTRACKER_DB_USERNAME=${BUGTRACKER_DB_USERNAME}
+      - BUGTRACKER_DB_PASSWORD=${BUGTRACKER_DB_PASSWORD}
+      - BUGTRACKER_DB_URL=jdbc:postgresql://postgresdb:${POSTGRESQL_DOCKER_PORT}/${BUGTRACKER_DB}
+    stdin_open: true
+    tty: true
