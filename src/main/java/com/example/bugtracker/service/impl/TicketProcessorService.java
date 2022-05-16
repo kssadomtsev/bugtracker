@@ -121,6 +121,7 @@ public class TicketProcessorService {
         commentService.save(comment);
 
         ticket.setStatus(StatusTicket.SOLVED);
+        ticket.setSolvedAt(LocalDateTime.now());
 
         return mappingService.map(ticketService.save(ticket), TicketDto.class);
     }
