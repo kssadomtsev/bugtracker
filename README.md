@@ -1,34 +1,4 @@
 # Simple Bugtracker application
-This Simple Bugtracker application developed by test assignment requirements as a part in recruitment process.
-
-## Overview
-
-### Task description
-Implement a simple bug tracker as a REST service.
-
-Please implement a bug tracker service before the interview:
-<ol>
-<li>The restful API should support the standard operations like create, retrieve and update a simple bug ticket.
-<li>The service should be implemented in Java and make use of Spring Boot and probably some other Spring modules.
-<li>You may use a database of your choice (in-memory data store is allowed)
-<li>We like testing, so please also provide appropriate tests using JUnit and Mockito.
-<li>After your presentation of your service, we think together of an additional test or an additional feature and would like to see how you implement it.
-</ol>
-
-General
-<ol>
-<li>Use Java and Spring-Boot
-<li>You can use every resource you want (web, other code, etc.)
-</ol>
-
-Please prepare for the interview:
-<ol>
-<li>Set up the project and add needed dependencies
-<li>Implement a REST API with CRUD functionalities
-<li>Add/use a database of your choice (in-memory data store is allowed)
-<li>Test your application
-<li>Bonus (optional): Dockerize your application
-</ol>
 
 ### Technologies
 During application development were used following languages, frameworks, libraries and tools.
