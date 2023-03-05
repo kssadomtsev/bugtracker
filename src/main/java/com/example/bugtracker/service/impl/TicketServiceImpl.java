@@ -7,6 +7,8 @@ import com.example.bugtracker.service.TicketService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * TicketService interface implementation
  */
@@ -35,5 +37,10 @@ public class TicketServiceImpl implements TicketService {
         } else {
             repository.deleteById(id);
         }
+    }
+
+    @Override
+    public List<Ticket> saveAll(List<Ticket> tickets) {
+        return repository.saveAll(tickets);
     }
 }

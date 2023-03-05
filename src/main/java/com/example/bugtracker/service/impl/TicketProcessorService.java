@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Service implements business application logic such as
@@ -89,6 +91,7 @@ public class TicketProcessorService {
     @Transactional
     public TicketDto assign(Long id, TicketAssignDto ticketAssignDto) {
         Ticket ticket = ticketService.findById(id);
+
         TicketUtil.checkCorrectTicketStatus(ticket.getStatus(), TICKET_STATUSES_FOR_ASSIGNMENT);
 
         User user = userService.findByEmail(ticketAssignDto.getResponsible());
@@ -98,11 +101,43 @@ public class TicketProcessorService {
         comment.setTicket(ticket);
         commentService.save(comment);
 
-        ticket.setResponsible(user);
-        ticket.setStatus(StatusTicket.ASSIGNED);
+
+        setResponsibleAndStatus(ticket, user, StatusTicket.ASSIGNED);
 
         return mappingService.map(ticketService.save(ticket), TicketDto.class);
     }
+
+
+    public List<TicketDto> assignMultiple(TicketMultipleAssignDto ticketMultipleAssignDto) {
+        List<Ticket> tickets = getTicketsByIds(ticketMultipleAssignDto.getTicketIds());
+
+        extracted(tickets);
+
+        User user = userService.findByEmail(ticketMultipleAssignDto.getResponsible());
+        TicketUtil.checkCorrectRole(user, DEVELOPER_ROLE_SET);
+
+        for (Ticket ticket : tickets) {
+            setResponsibleAndStatus(ticket, user, StatusTicket.ASSIGNED);
+        }
+        return mappingService.mapList(ticketService.saveAll(tickets), TicketDto.class);
+    }
+
+    private void extracted(List<Ticket> tickets) {
+        for (Ticket ticket : tickets) {
+            TicketUtil.checkCorrectTicketStatus(ticket.getStatus(), TICKET_STATUSES_FOR_ASSIGNMENT);
+        }
+    }
+
+
+    private void setResponsibleAndStatus(Ticket ticket, User user, StatusTicket statusTicket) {
+        ticket.setResponsible(user);
+        ticket.setStatus(statusTicket);
+    }
+
+    private List<Ticket> getTicketsByIds(List<Long> ids){
+        return ids.stream().map(ticketService::findById).collect(Collectors.toList());
+    }
+
 
     /**
      * Solve ticket
@@ -193,4 +228,6 @@ public class TicketProcessorService {
     public TicketDto getDtoById(Long id) {
         return mappingService.map(ticketService.findById(id), TicketDto.class);
     }
+
+
 }

@@ -10,6 +10,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -122,6 +124,40 @@ class TicketControllerTest extends AbstractMvcInit {
                 .andExpect(jsonPath("$.responsible", Matchers.is("john_dev@rd.com")))
                 .andExpect(jsonPath("$.status", Matchers.is("ASSIGNED")));
     }
+
+    @Test
+    void assignMulipleTicketsToNotDeveloper_thenStatus403() throws Exception {
+        TicketMultipleAssignDto multipleAssignDto = TicketMultipleAssignDto.builder()
+                .ticketIds(List.of(1L, 7L))
+                .responsible("bob_admin@rd.com")
+                .message("Ticket assignment")
+                .build();
+
+        mvc.perform(MockMvcRequestBuilders.patch(ticketPath + "/multi-assign")
+                        .header("Authorization", adminJWT)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE).content(mapToJson(multipleAssignDto)))
+                .andDo(print())
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message", Matchers.is("User bob_admin@rd.com hasn't correct role for assignment")));
+    }
+
+    @Test
+    void assignMulipleTicketsCorrect() throws Exception {
+        TicketMultipleAssignDto multipleAssignDto = TicketMultipleAssignDto.builder()
+                .ticketIds(List.of(1L, 7L))
+                .responsible("john_dev@rd.com")
+                .message("Ticket assignment")
+                .build();
+
+        mvc.perform(MockMvcRequestBuilders.patch(ticketPath + "/multi-assign")
+                        .header("Authorization", adminJWT)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE).content(mapToJson(multipleAssignDto)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].responsible",Matchers.is("john_dev@rd.com")));
+    }
+
 
     @Test
     void solveTicketCorrect() throws Exception {

@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -58,6 +59,14 @@ public class TicketController {
     @PreAuthorize("hasAnyAuthority('ADMIN','DEVELOPER')")
     public TicketDto assign(@PathVariable Long id, @Valid @RequestBody TicketAssignDto ticketAssignDto) {
         return service.assign(id, ticketAssignDto);
+    }
+
+
+    @Operation(summary = "Assign multiple tickets to responsible")
+    @PatchMapping("/multi-assign")
+    @PreAuthorize("hasAnyAuthority('ADMIN','DEVELOPER')")
+    public List<TicketDto> assignMultiple(@Valid @RequestBody TicketMultipleAssignDto ticketMultipleAssignDto) {
+        return service.assignMultiple(ticketMultipleAssignDto);
     }
 
     @Operation(summary = "Solve ticket by id")

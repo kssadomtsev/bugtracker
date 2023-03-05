@@ -3,6 +3,8 @@ package com.example.bugtracker.service;
 import com.example.bugtracker.model.Ticket;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Service provides operations on ticket
  */
@@ -30,4 +32,6 @@ public interface TicketService {
      */
 
     void deleteById(Long id);
+
+    List<Ticket> saveAll(List<Ticket> tickets);
 }

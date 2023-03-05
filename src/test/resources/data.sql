@@ -35,7 +35,8 @@ VALUES (1, 'LOW','2022-05-05 21:36:48', '2022-05-05 21:36:48', null, 5, null, 'N
        (3, 'MAJOR','2022-04-23 21:36:48', '2022-04-27 21:36:48', null, 7, 2, 'SOLVED','Major severity software bug'),
        (4, 'CRITICAL','2022-04-13 21:36:48', '2022-04-17 21:36:48', null, 5, 1, 'SOLVED','Critical severity software bug'),
        (5, 'MAJOR','2022-04-14 21:36:48', '2022-04-19 21:36:48','2022-05-05 21:36:48', 6, 2, 'CLOSED','Major severity software bug 2'),
-       (6, 'LOW','2022-05-01 21:36:48', '2022-05-08 21:36:48', '2022-05-05 21:36:48', 7, 1, 'REOPEN', 'Low severity software bug 2');
+       (6, 'LOW','2022-05-01 21:36:48', '2022-05-08 21:36:48', '2022-05-05 21:36:48', 7, 1, 'REOPEN', 'Low severity software bug 2'),
+       (7, 'LOW','2022-05-05 21:36:48', '2022-05-05 21:36:48', null, 5, null, 'NEW', 'Low severity software bug 2');
 
 INSERT INTO comment(id, ticket_id, message, created_at, author_id)
 VALUES (1, 2, 'Assigned ticket to Alice White', '2022-05-07 21:36:48', 1),
@@ -57,5 +58,5 @@ VALUES (1, 2, 'Assigned ticket to Alice White', '2022-05-07 21:36:48', 1),
 
 SELECT setval('company_id_seq', 4, true);
 SELECT setval('users_id_seq', 7, true);
-SELECT setval('ticket_id_seq', 6, true);
+SELECT setval('ticket_id_seq', 7, true);
 SELECT setval('comment_id_seq', 12, true);
